@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using RentACar.Data;
+
 namespace RentACar
 {
     public class Program
@@ -8,6 +11,8 @@ namespace RentACar
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<ApplicationDbContext>(
+                options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 
