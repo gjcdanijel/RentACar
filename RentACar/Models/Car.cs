@@ -12,7 +12,7 @@ namespace RentACar.Models
 		[Required]
 		public string Make { get; set; }
 		[Required]
-		public string ManufactureYear { get; set; }
+		public int ManufactureYear { get; set; }
 		[Required]
 		public string Fuel { get; set; }
 		public bool isAvailable { get; set; } = true;
