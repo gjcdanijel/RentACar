@@ -1,0 +1,36 @@
+﻿@model List<Customer>
+
+<div class="container">
+	<div class="row pt-4">
+		<div class="col-6">
+			<a class="btn btn-primary mb-2" asp-controller="Customer" asp-action="Add">
+				Add a new Customer
+			</a>
+		</div>
+	</div>
+</div>
+<div class="table-responsive">
+	<table class="table table-stripd table-hover">
+		<thead>
+			<tr>
+				<th>Lastname</th>
+				<th>FirstName</th>
+				<th>Email</th>
+				<th>Phone</th>
+				<th>Address</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var customer in Model)
+			{
+				<tr class="mb-1">
+					<td>@customer.LastName</td>
+					<td>@customer.FirstName</td>
+					<td>@customer.Email</td>
+					<td>@customer.Phone</td>
+					<td>@customer.Address</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
