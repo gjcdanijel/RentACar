@@ -29,7 +29,8 @@ namespace RentACar.Data
 					ManufactureYear = 2015,
 					Fuel = "Diesel"
 				},
-				new Car {
+				new Car
+				{
 					Id = 2,
 					Make = "BMW",
 					Model = "X5",
@@ -40,19 +41,20 @@ namespace RentACar.Data
 
 			//Starting data for Customers
 			modelBuilder.Entity<Customer>().HasData(
-				new Customer {
+				new Customer
+				{
 					Id = 1,
 					FirstName = "John",
 					LastName = "Jones",
-					Email ="johnjones@email.com",
+					Email = "johnjones@email.com",
 					Address = "123 Main Street",
 					Phone = "123-456-7890"
 				},
 				new Customer
 				{
 					Id = 2,
-					FirstName ="Dana",
-					LastName ="White",
+					FirstName = "Dana",
+					LastName = "White",
 					Email = "danawhite@email.com",
 					Address = "124 Main Street",
 					Phone = "123-456-7891"

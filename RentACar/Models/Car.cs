@@ -19,9 +19,9 @@ namespace RentACar.Models
 
 		// FK
 		[ForeignKey("Rental")]
-		public int RentalId;
+		public int? RentalId;
 		[ForeignKey("Maintenance")]
-		public int MaintenanceId;
+		public int? MaintenanceId;
 
 		// Navigation Properties
 		public Rental Rental { get; set; }

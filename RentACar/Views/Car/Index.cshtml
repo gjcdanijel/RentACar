@@ -3,7 +3,12 @@
 <div class="container">
 	<div class="row pt-4">
 		<div class="col-6">
-			<h2>Car List</h2>
+			<a class="btn btn-primary mb-2" asp-controller="Car" asp-action="Add">
+				Add a new Car
+			</a>
+			</div>
+			<div class="col-6 text-end">
+				<h2>Car List</h2>
 			</div>
 		</div>
 </div>
@@ -11,20 +16,22 @@
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
-				<th>Title</th>
-				<th>Content</th>
-				<th>Date</th>
-				<th>Actions</th>
+				<th>Model</th>
+				<th>Make</th>
+				<th>ManufactureYear</th>
+				<th>Fuel</th>
+				<th>Available</th>
+				<th>Options</th>
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (var entry in Model){
-				<tr>
-					<td>@entry.Model</td>
-					<td>@entry.Make</td>
-					<td>@entry.ManufactureYear</td>
-					<td>@entry.Fuel</td>
-					<td>@entry.isAvailable</td>
+			@foreach (var car in Model){
+				<tr class="mb-1">
+					<td>@car.Model</td>
+					<td>@car.Make</td>
+					<td>@car.ManufactureYear</td>
+					<td>@car.Fuel</td>
+					<td>@car.isAvailable</td>
 					<td>Edit and Delete!</td>
 				</tr>
 			}

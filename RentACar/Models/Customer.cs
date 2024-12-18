@@ -19,7 +19,7 @@ namespace RentACar.Models
 		public string Address { get; set; }
 		
 		[ForeignKey("Rental")]
-		public int RentalId { get; set; }
+		public int? RentalId { get; set; }
 		// Navigation property
 		public Rental Rental { get; set; }
 	}

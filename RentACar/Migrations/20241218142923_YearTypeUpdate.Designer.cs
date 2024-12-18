@@ -12,8 +12,8 @@ using RentACar.Data;
 namespace RentACar.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241216195436_AddingSeedCars")]
-    partial class AddingSeedCars
+    [Migration("20241218142923_YearTypeUpdate")]
+    partial class YearTypeUpdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

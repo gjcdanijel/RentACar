@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentACar.Data;
 
@@ -11,9 +12,11 @@ using RentACar.Data;
 namespace RentACar.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241218151343_NullFk")]
+    partial class NullFk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,26 +68,6 @@ namespace RentACar.Migrations
                         .HasFilter("[RentalId] IS NOT NULL");
 
                     b.ToTable("Cars");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Fuel = "Diesel",
-                            Make = "Audi",
-                            ManufactureYear = 2015,
-                            Model = "A4",
-                            isAvailable = true
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Fuel = "Diesel",
-                            Make = "BMW",
-                            ManufactureYear = 2018,
-                            Model = "X5",
-                            isAvailable = true
-                        });
                 });
 
             modelBuilder.Entity("RentACar.Models.Customer", b =>
@@ -123,26 +106,6 @@ namespace RentACar.Migrations
                     b.HasIndex("RentalId");
 
                     b.ToTable("Customers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "123 Main Street",
-                            Email = "johnjones@email.com",
-                            FirstName = "John",
-                            LastName = "Jones",
-                            Phone = "123-456-7890"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Address = "124 Main Street",
-                            Email = "danawhite@email.com",
-                            FirstName = "Dana",
-                            LastName = "White",
-                            Phone = "123-456-7891"
-                        });
                 });
 
             modelBuilder.Entity("RentACar.Models.Maintenance", b =>

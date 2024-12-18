@@ -14,9 +14,9 @@ namespace RentACar.Models
 		public float TotalPrice { get; set; }
 
 		[ForeignKey("Car")]
-		public int CarId { get; set; }
+		public int? CarId { get; set; }
 		[ForeignKey("Customer")]
-		public int CustomerId { get; set; }
+		public int? CustomerId { get; set; }
 
 		//Navigation properties
 		public Car Car { get; set; }
