@@ -1,0 +1,41 @@
+﻿@model List<Rental>
+
+<div class="container">
+	<div class="row pt-4">
+		<div class="col-6">
+			<a class="btn btn-primary mb-2" asp-controller="Rental" asp-action="Add">
+				Rent out a car!
+			</a>
+			</div>
+			<div class="col-6 text-end">
+				<h2>Rental List</h2>
+			</div>
+		</div>
+</div>
+<div class="table-responsive">
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Car Id</th>
+				<th>Customer Id</th>
+				<th>Start Date</th>
+				<th>End Date</th>
+				<th>Price per day</th>
+				<th>Total price</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var rental in Model){
+				<tr class="mb-1">
+					<td>@rental.CarId</td>
+					<td>@rental.CustomerId</td>
+					<td>@rental.StartDate</td>
+					<td>@rental.EndDate</td>
+					<td>@rental.PricePerDay</td>
+					<td>@rental.TotalPrice</td>
+					<td>Edit and Delete!</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

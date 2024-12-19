@@ -8,8 +8,8 @@ namespace RentACar.Models
 		[Key]
 		public int Id { get; set; }
 		[Required]
-		public DateOnly StartDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
-		public DateOnly EndDate { get; set; }
+		public DateTime StartDate { get; set; } = DateTime.Now;
+		public DateTime EndDate { get; set; }
 		public float PricePerDay { get; set; }
 		public float TotalPrice { get; set; }
 
@@ -19,8 +19,8 @@ namespace RentACar.Models
 		public int? CustomerId { get; set; }
 
 		//Navigation properties
-		public Car Car { get; set; }
-		public Customer Customer { get; set; }
+		public Car? Car { get; set; }
+		public Customer? Customer { get; set; }
 
 	}
 }
