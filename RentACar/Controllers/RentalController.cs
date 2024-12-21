@@ -2,6 +2,7 @@
 using RentACar.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace RentACar.Controllers
 {
@@ -15,7 +16,11 @@ namespace RentACar.Controllers
 
 		public IActionResult Index()
 		{
-			List<Rental> rentals = _db.Rental.ToList();
+			var rentals = _db.Rentals
+		.Include(r => r.Car)
+		.Include(r => r.Customer)
+		.ToList();
+
 			return View(rentals);
 		}
 		public IActionResult Add()
@@ -29,7 +34,7 @@ namespace RentACar.Controllers
 				})
 				.ToList();
 
-			ViewBag.Customer = _db.Customer
+			ViewBag.Customer = _db.Customers
 				.Select(c => new SelectListItem
 				{
 					Value = c.Id.ToString(),
@@ -45,12 +50,12 @@ namespace RentACar.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				_db.Rental.Add(rental);
+				_db.Rentals.Add(rental);
 
 				var car = _db.Cars.Find(rental.CarId);
 				if (car != null)
 				{
-					car.isAvailable = false; 
+					car.isAvailable = false;
 				}
 
 				_db.SaveChanges();
@@ -66,7 +71,7 @@ namespace RentACar.Controllers
 				})
 				.ToList();
 
-			ViewBag.Customer = _db.Customer
+			ViewBag.Customer = _db.Customers
 				.Select(c => new SelectListItem
 				{
 					Value = c.Id.ToString(),
@@ -76,6 +81,87 @@ namespace RentACar.Controllers
 
 			return View(rental);
 		}
+		[HttpGet]
+		public IActionResult Edit(int id)
+		{
+			if (id == 0 || id == null)
+			{
+				return NotFound();
+			}
+			Car? car = _db.Cars.Find(id);
 
+			if (car == null)
+			{
+				return NotFound();
+			}
+
+			return View(car);
+		}
+		[HttpPost]
+		public IActionResult Edit(Car car)
+		{
+			if (car == null)
+			{
+				return NotFound();
+			}
+			if (ModelState.IsValid)
+			{
+				_db.Cars.Update(car);
+				_db.SaveChanges();
+				return RedirectToAction("Index");
+			}
+
+			return View(car);
+		}
+
+		[HttpGet]
+		public IActionResult Delete(int? id)
+		{
+			if (id == 0 || id == null)
+			{
+				return NotFound();
+			}
+
+			Rental? rental = _db.Rentals.Include(r => r.Car).Include(r => r.Customer).FirstOrDefault(r => r.Id == id);
+
+			if (rental == null)
+			{
+				return NotFound();
+			}
+
+			return View(rental);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult Delete(Rental rental)
+		{
+			var rentalToDelete = _db.Rentals
+								 .Include(c => c.Car)
+								 .Include(c => c.Customer)
+								 .FirstOrDefault(c => c.Id == rental.Id);
+
+			if (rentalToDelete == null)
+			{
+				return NotFound();
+			}
+
+			if (rentalToDelete.Car != null)
+			{
+				rentalToDelete.Car.RentalId = null; ;
+			}
+
+			if (rentalToDelete.Customer != null)
+			{
+				rentalToDelete.Customer.RentalId = null; ;
+			}
+
+			_db.Rentals.Remove(rentalToDelete);
+
+			_db.SaveChanges();
+
+			return RedirectToAction("Index");
+
+		}
 	}
 }

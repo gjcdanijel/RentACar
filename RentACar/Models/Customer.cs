@@ -21,6 +21,6 @@ namespace RentACar.Models
 		[ForeignKey("Rental")]
 		public int? RentalId { get; set; }
 		// Navigation property
-		public Rental Rental { get; set; }
+		public Rental? Rental { get; set; }
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using RentACar.Data;
 using RentACar.Models;
 
@@ -16,7 +17,10 @@ namespace RentACar.Controllers
 
 		public ActionResult Index()
 		{
-			List<Maintenance> Maintenances = _db.Maintenance.ToList();
+			List<Maintenance> Maintenances = _db.Maintenances
+				.Include(m => m.Car)
+				.ToList();
+
 			return View(Maintenances);
 		}
 		public ActionResult Add()
@@ -35,7 +39,7 @@ namespace RentACar.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				_db.Maintenance.Add(maintenance);
+				_db.Maintenances.Add(maintenance);
 
 				_db.SaveChanges();
 				return RedirectToAction("Index");
@@ -50,6 +54,82 @@ namespace RentACar.Controllers
 				.ToList();
 
 			return View(maintenance);
+		}
+
+		[HttpGet]
+		public IActionResult Edit(int id)
+		{
+			if (id == 0 || id == null)
+			{
+				return NotFound();
+			}
+			Maintenance? maintenance = _db.Maintenances.Find(id);
+
+			if (maintenance == null)
+			{
+				return NotFound();
+			}
+
+			return View(maintenance);
+		}
+		[HttpPost]
+		public IActionResult Edit(Maintenance maintenance)
+		{
+			if (maintenance == null)
+			{
+				return NotFound();
+			}
+			if (ModelState.IsValid)
+			{
+				_db.Maintenances.Update(maintenance);
+				_db.SaveChanges();
+				return RedirectToAction("Index");
+			}
+
+			return View(maintenance);
+		}
+		[HttpGet]
+		public IActionResult Delete(int? id)
+		{
+			if (id == 0 || id == null)
+			{
+				return NotFound();
+			}
+
+			Maintenance? maintenance = _db.Maintenances.Include(c => c.Car).FirstOrDefault(c => c.Id == id);
+
+			if (maintenance == null)
+			{
+				return NotFound();
+			}
+
+			return View(maintenance);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult Delete(Maintenance maintenance)
+		{
+			var maintenanceToDelete = _db.Maintenances
+								 .Include(c => c.Car)
+								 .FirstOrDefault(c => c.Id == maintenance.Id);
+
+			if (maintenanceToDelete == null)
+			{
+				return NotFound();
+			}
+
+			if (maintenanceToDelete.Car != null)
+			{
+				maintenanceToDelete.Car.MaintenanceId = null;
+			}
+
+
+			_db.Maintenances.Remove(maintenanceToDelete);
+
+			_db.SaveChanges();
+
+			return RedirectToAction("Index");
 		}
 	}
 }

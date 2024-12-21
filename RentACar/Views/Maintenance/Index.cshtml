@@ -20,17 +20,24 @@
 				<th>Type</th>
 				<th>Description</th>
 				<th>Cost</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
 			@foreach (var maintenance in Model)
 			{
 				<tr class="mb-1">
-					<td>@maintenance.CarId</td>
+					<td>@maintenance.Car.Make @maintenance.Car.Model (@maintenance.Car.ManufactureYear)</td>
 					<td>@maintenance.Type</td>
 					<td>@maintenance.Description</td>
 					<td>@maintenance.Cost</td>
-					<td>Edit and Delete!</td>
+					<td>
+						<a class="btn btn-primary mh-5" asp-controller="Maintenance" asp-action="Edit" asp-route-id="@maintenance.Id">Edit</a>
+						<form asp-controller="Maintenance" asp-action="Delete" method="post" style="display:inline;">
+							<input type="hidden" name="id" value="@maintenance.Id" />
+							<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this maintenance?')">Delete</button>
+						</form>
+					</td>
 				</tr>
 			}
 		</tbody>

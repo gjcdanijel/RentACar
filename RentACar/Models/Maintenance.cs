@@ -14,7 +14,7 @@ namespace RentACar.Models
 		public float Cost { get; set; } = 0f;
 		public DateTime MaitenanceDate { get; set; } = DateTime.Now;
 		[ForeignKey("Car")]
-		public int CarId { get; set; }
+		public int? CarId { get; set; }
 		public Car? Car { get; set; }
 	}
 }

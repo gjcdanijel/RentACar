@@ -12,8 +12,8 @@ using RentACar.Data;
 namespace RentACar.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241218142923_YearTypeUpdate")]
-    partial class YearTypeUpdate
+    [Migration("20241221154041_DbAndMockMigration")]
+    partial class DbAndMockMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,7 +37,7 @@ namespace RentACar.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MaintenanceId")
+                    b.Property<int?>("MaintenanceId")
                         .HasColumnType("int");
 
                     b.Property<string>("Make")
@@ -51,7 +51,7 @@ namespace RentACar.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RentalId")
+                    b.Property<int?>("RentalId")
                         .HasColumnType("int");
 
                     b.Property<bool>("isAvailable")
@@ -59,36 +59,35 @@ namespace RentACar.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MaintenanceId")
-                        .IsUnique();
-
-                    b.HasIndex("RentalId")
-                        .IsUnique();
-
                     b.ToTable("Cars");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Fuel = "Diesel",
-                            MaintenanceId = 0,
+                            Fuel = "Gasoline",
                             Make = "Audi",
-                            ManufactureYear = 2015,
+                            ManufactureYear = 2020,
                             Model = "A4",
-                            RentalId = 0,
                             isAvailable = true
                         },
                         new
                         {
                             Id = 2,
                             Fuel = "Diesel",
-                            MaintenanceId = 0,
                             Make = "BMW",
-                            ManufactureYear = 2018,
-                            Model = "X5",
-                            RentalId = 0,
+                            ManufactureYear = 2019,
+                            Model = "3 Series",
                             isAvailable = true
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Fuel = "Hybrid",
+                            Make = "Mercedes-Benz",
+                            ManufactureYear = 2021,
+                            Model = "C-Class",
+                            isAvailable = false
                         });
                 });
 
@@ -120,12 +119,10 @@ namespace RentACar.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RentalId")
+                    b.Property<int?>("RentalId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RentalId");
 
                     b.ToTable("Customers");
 
@@ -133,22 +130,29 @@ namespace RentACar.Migrations
                         new
                         {
                             Id = 1,
-                            Address = "123 Main Street",
-                            Email = "johnjones@email.com",
+                            Address = "123 Main Street, London",
+                            Email = "john.smith@example.com",
                             FirstName = "John",
-                            LastName = "Jones",
-                            Phone = "123-456-7890",
-                            RentalId = 0
+                            LastName = "Smith",
+                            Phone = "061-123-4567"
                         },
                         new
                         {
                             Id = 2,
-                            Address = "124 Main Street",
-                            Email = "danawhite@email.com",
-                            FirstName = "Dana",
-                            LastName = "White",
-                            Phone = "123-456-7891",
-                            RentalId = 0
+                            Address = "12 Rue de Paris, Paris",
+                            Email = "marie.dupont@example.com",
+                            FirstName = "Marie",
+                            LastName = "Dupont",
+                            Phone = "064-987-6543"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Address = "45 Avenida de Madrid, Madrid",
+                            Email = "carlos.garcia@example.com",
+                            FirstName = "Carlos",
+                            LastName = "Garcia",
+                            Phone = "062-555-5555"
                         });
                 });
 
@@ -160,7 +164,7 @@ namespace RentACar.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CarId")
+                    b.Property<int?>("CarId")
                         .HasColumnType("int");
 
                     b.Property<float>("Cost")
@@ -170,8 +174,8 @@ namespace RentACar.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly>("MaitenanceDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("MaitenanceDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -179,7 +183,9 @@ namespace RentACar.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CarId");
+                    b.HasIndex("CarId")
+                        .IsUnique()
+                        .HasFilter("[CarId] IS NOT NULL");
 
                     b.ToTable("Maintenances");
                 });
@@ -192,70 +198,43 @@ namespace RentACar.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CarId")
+                    b.Property<int?>("CarId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("EndDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<float>("PricePerDay")
                         .HasColumnType("real");
 
-                    b.Property<DateOnly>("StartDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<float>("TotalPrice")
                         .HasColumnType("real");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CarId");
+                    b.HasIndex("CarId")
+                        .IsUnique()
+                        .HasFilter("[CarId] IS NOT NULL");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("CustomerId")
+                        .IsUnique()
+                        .HasFilter("[CustomerId] IS NOT NULL");
 
                     b.ToTable("Rentals");
-                });
-
-            modelBuilder.Entity("RentACar.Models.Car", b =>
-                {
-                    b.HasOne("RentACar.Models.Maintenance", "Maintenance")
-                        .WithOne()
-                        .HasForeignKey("RentACar.Models.Car", "MaintenanceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RentACar.Models.Rental", "Rental")
-                        .WithOne()
-                        .HasForeignKey("RentACar.Models.Car", "RentalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Maintenance");
-
-                    b.Navigation("Rental");
-                });
-
-            modelBuilder.Entity("RentACar.Models.Customer", b =>
-                {
-                    b.HasOne("RentACar.Models.Rental", "Rental")
-                        .WithMany()
-                        .HasForeignKey("RentalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Rental");
                 });
 
             modelBuilder.Entity("RentACar.Models.Maintenance", b =>
                 {
                     b.HasOne("RentACar.Models.Car", "Car")
-                        .WithMany()
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("Maintenance")
+                        .HasForeignKey("RentACar.Models.Maintenance", "CarId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Car");
                 });
@@ -263,20 +242,30 @@ namespace RentACar.Migrations
             modelBuilder.Entity("RentACar.Models.Rental", b =>
                 {
                     b.HasOne("RentACar.Models.Car", "Car")
-                        .WithMany()
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("Rental")
+                        .HasForeignKey("RentACar.Models.Rental", "CarId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("RentACar.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("Rental")
+                        .HasForeignKey("RentACar.Models.Rental", "CustomerId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Car");
 
                     b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("RentACar.Models.Car", b =>
+                {
+                    b.Navigation("Maintenance");
+
+                    b.Navigation("Rental");
+                });
+
+            modelBuilder.Entity("RentACar.Models.Customer", b =>
+                {
+                    b.Navigation("Rental");
                 });
 #pragma warning restore 612, 618
         }

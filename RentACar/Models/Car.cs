@@ -24,8 +24,8 @@ namespace RentACar.Models
 		public int? MaintenanceId;
 
 		// Navigation Properties
-		public Rental Rental { get; set; }
-		public Maintenance Maintenance { get; set; }
+		public Rental? Rental { get; set; }
+		public Maintenance? Maintenance { get; set; }
 
 	}
 }

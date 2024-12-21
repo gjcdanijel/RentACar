@@ -1,4 +1,10 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿// wwwroot/js/site.js
+$(document).ready(function () {
+    $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // dugme koje je pokrenulo modal
+        var carId = button.data('car-id'); // Uzimanje ID-a iz atributa data-car-id
 
-// Write your JavaScript code.
+        var modal = $(this);
+        modal.find('#carIdToDelete').val(carId); // Postavljanje ID-a u hidden input u formi
+    });
+});

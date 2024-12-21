@@ -22,20 +22,28 @@
 				<th>End Date</th>
 				<th>Price per day</th>
 				<th>Total price</th>
-			</tr>
-		</thead>
+				<th></th>
+				</thead>
 		<tbody>
-			@foreach (var rental in Model){
+			@foreach (var rental in Model)
+			{
 				<tr class="mb-1">
-					<td>@rental.CarId</td>
-					<td>@rental.CustomerId</td>
+					<td>@rental.Car.Make @rental.Car.Model @rental.Car.ManufactureYear</td>
+					<td>@rental.Customer.LastName @rental.Customer.FirstName (@rental.Customer.Address)</td>
 					<td>@rental.StartDate</td>
 					<td>@rental.EndDate</td>
 					<td>@rental.PricePerDay</td>
 					<td>@rental.TotalPrice</td>
-					<td>Edit and Delete!</td>
+					<td>
+						<a class="btn btn-primary mh-5" asp-controller="Rental" asp-action="Edit" asp-route-id="@rental.Id">Edit</a>
+						<form asp-controller="Rental" asp-action="Delete" method="post" style="display:inline;">
+							<input type="hidden" name="id" value="@rental.Id" />
+							<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this rent?')">Delete</button>
+						</form>
+					</td>
 				</tr>
 			}
 		</tbody>
 	</table>
 </div>
+			

@@ -8,14 +8,14 @@
 					<h2>Edit car</h2>
 				</div>
 				<div class="card-body">
-					<form asp-action="Add" method="post">
+					<form asp-action="Edit" method="post">
 						<div class="form-group mb-3">
 							<label asp-for="Model" class="form-label">Model</label>
 							<input asp-for="Model" class="form-control" placeholder="Enter model here" />
 						</div>
 						<div class="form-group mb-3">
 							<label asp-for="Make" class="form-label">Make</label>
-							<input asp-for="Make" row="5" class="form-control" placeholder="Enter what you did that day" />
+							<input asp-for="Make" row="5" class="form-control" placeholder="Enter make here" />
 						</div>
 						<div class="form-group mb-3">
 							<label asp-for="ManufactureYear" class="form-label">Manufacture Year</label>
@@ -26,7 +26,7 @@
 							<input asp-for="Fuel" class="form-control" />
 						</div>
 						<div class="d-flex justify-content-between">
-							<button type="submit" class="btn btn-primary">Add</button>
+							<button type="submit" class="btn btn-primary">Save</button>
 							<a asp-controller="Car" asp-action="Index" class="btn btn-danger">Cancel</a>
 						</div>
 					</form>
@@ -35,6 +35,7 @@
 		</div>
 	</div>
 </div>
+
 @section Scripts {
 	<partial name="_ValidationScriptsPartial" />
 }
