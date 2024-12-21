@@ -50,14 +50,13 @@ namespace RentACar.Controllers
 				var car = _db.Cars.Find(rental.CarId);
 				if (car != null)
 				{
-					car.isAvailable = false; // Obeleži automobil kao zauzet
+					car.isAvailable = false; 
 				}
 
 				_db.SaveChanges();
 				return RedirectToAction("Index");
 			}
 
-			// Ponovo postavi ViewBag sa podacima u slučaju greške
 			ViewBag.Cars = _db.Cars
 				.Where(c => c.isAvailable)
 				.Select(c => new SelectListItem
@@ -75,7 +74,7 @@ namespace RentACar.Controllers
 				})
 				.ToList();
 
-			return View(rental); // Ako postoji greška, ponovo prikaži formu
+			return View(rental);
 		}
 
 	}

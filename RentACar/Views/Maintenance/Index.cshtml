@@ -1,0 +1,38 @@
+﻿@model List<Maintenance>
+
+<div class="container">
+	<div class="row pt-4">
+		<div class="col-6">
+			<a class="btn btn-primary mb-2" asp-controller="Maintenance" asp-action="Add">
+				Add new Maintenance!
+			</a>
+			</div>
+			<div class="col-6 text-end">
+			<h2>Maintenance List</h2>
+			</div>
+		</div>
+</div>
+<div class="table-responsive">
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Car</th>
+				<th>Type</th>
+				<th>Description</th>
+				<th>Cost</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var maintenance in Model)
+			{
+				<tr class="mb-1">
+					<td>@maintenance.CarId</td>
+					<td>@maintenance.Type</td>
+					<td>@maintenance.Description</td>
+					<td>@maintenance.Cost</td>
+					<td>Edit and Delete!</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

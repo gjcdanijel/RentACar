@@ -27,6 +27,7 @@ namespace RentACar.Controllers
 			_db.Customer.Add(obj);
 			_db.SaveChanges();
 			return RedirectToAction("Index");
+
 		}
 	}
 }

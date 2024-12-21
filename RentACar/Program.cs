@@ -32,7 +32,7 @@ namespace RentACar
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Car}/{action=Index}/{id?}")
+                pattern: "{controller=Rental}/{action=Index}/{id?}")
                 .WithStaticAssets();
 
             app.Run();

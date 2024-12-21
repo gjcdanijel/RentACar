@@ -13,7 +13,7 @@ namespace RentACar.Data
 		public DbSet<Car> Cars { get; set; }
 		public DbSet<Customer> Customer { get; set; }
 		public DbSet<Rental> Rental { get; set; }
-		public DbSet<Maintenance> Maintenances { get; set; }
+		public DbSet<Maintenance> Maintenance { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
