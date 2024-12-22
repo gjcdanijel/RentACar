@@ -31,7 +31,16 @@
 					<td>@car.Make</td>
 					<td>@car.ManufactureYear</td>
 					<td>@car.Fuel</td>
-					<td>@car.isAvailable</td>
+					<td>
+					@if (@car.isAvailable)
+					{
+						<span style="color: green;">✔️ Available</span>
+					}
+					else
+					{
+						<span style="color: red;">❌ Not Available</span>
+					}
+					</td>
 					<td>
 						<a class="btn btn-primary mh-5" asp-controller="Car" asp-action="Edit" asp-route-id="@car.Id">Edit</a>
 						<form asp-controller="Car" asp-action="Delete" method="post" style="display:inline;">

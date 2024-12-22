@@ -9,14 +9,17 @@
 				</div>
 				<div class="card-body">
 					<form asp-action="Edit" method="post">
+						<div asp-validation-summary="All" class="text-danger"></div>
 						<div class="form-group mb-3">
-							<label asp-for="CarId" class="form-label">Car</label>
-							<select asp-for="CarId" asp-items="ViewBag.Cars" class="form-control"></select>
+							<label class="form-label">Car</label>
+							<input class="form-control" type="text" value="@ViewBag.Car.Make @ViewBag.Car.Model @ViewBag.Car.ManufactureYear" readonly />
 						</div>
+
 						<div class="form-group mb-3">
-							<label asp-for="CustomerId" class="form-label">Customer</label>
-							<select asp-for="CustomerId" asp-items="ViewBag.Customer" class="form-control"></select>
+							<label class="form-label">Customer</label>
+							<input class="form-control" type="text" value="@ViewBag.Customer.FirstName @ViewBag.Customer.LastName" readonly />
 						</div>
+
 						<div class="form-group mb-3">
 							<label asp-for="StartDate" class="form-label">Start Date</label>
 							<input asp-for="StartDate" class="form-control" type="datetime-local" value="@Model.StartDate.ToString("yyyy-MM-ddTHH:mm")" />
@@ -35,7 +38,7 @@
 						</div>
 						<div class="d-flex justify-content-between">
 							<button type="submit" class="btn btn-primary">Edit</button>
-							<a asp-controller="Rental" asp-action="Edit" class="btn btn-danger">Cancel</a>
+							<a asp-controller="Rental" asp-action="Index" class="btn btn-danger">Cancel</a>
 						</div>
 					</form>
 				</div>

@@ -55,23 +55,27 @@ namespace RentACar.Controllers
 
 			return View(maintenance);
 		}
-
-		[HttpGet]
 		public IActionResult Edit(int id)
 		{
 			if (id == 0 || id == null)
 			{
 				return NotFound();
 			}
-			Maintenance? maintenance = _db.Maintenances.Find(id);
+
+			Maintenance? maintenance = _db.Maintenances
+				.Include(m => m.Car)
+				.FirstOrDefault(m => m.Id == id);
 
 			if (maintenance == null)
 			{
 				return NotFound();
 			}
 
+			ViewBag.Car = maintenance.Car;
+
 			return View(maintenance);
 		}
+
 		[HttpPost]
 		public IActionResult Edit(Maintenance maintenance)
 		{
@@ -79,6 +83,7 @@ namespace RentACar.Controllers
 			{
 				return NotFound();
 			}
+
 			if (ModelState.IsValid)
 			{
 				_db.Maintenances.Update(maintenance);
@@ -88,6 +93,7 @@ namespace RentACar.Controllers
 
 			return View(maintenance);
 		}
+
 		[HttpGet]
 		public IActionResult Delete(int? id)
 		{

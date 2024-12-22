@@ -27,6 +27,7 @@ namespace RentACar.Controllers
 		[HttpPost]
 		public IActionResult Add(Car obj)
 		{
+			obj.isAvailable = true;
 
 			_db.Cars.Add(obj);
 			_db.SaveChanges();
@@ -55,8 +56,9 @@ namespace RentACar.Controllers
 			{
 				return NotFound();
 			}
+
 			if (ModelState.IsValid)
-			{
+			{ 
 				_db.Cars.Update(car);
 				_db.SaveChanges();
 				return RedirectToAction("Index");

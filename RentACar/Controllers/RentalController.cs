@@ -81,37 +81,27 @@ namespace RentACar.Controllers
 
 			return View(rental);
 		}
-		[HttpGet]
 		public IActionResult Edit(int id)
 		{
 			if (id == 0 || id == null)
 			{
 				return NotFound();
 			}
-			Car? car = _db.Cars.Find(id);
 
-			if (car == null)
+			Rental? rental = _db.Rentals
+				.Include(r => r.Car)
+				.Include(r => r.Customer)
+				.FirstOrDefault(r => r.Id == id);
+
+			if (rental == null || rental.Car == null || rental.Customer == null)
 			{
 				return NotFound();
 			}
 
-			return View(car);
-		}
-		[HttpPost]
-		public IActionResult Edit(Car car)
-		{
-			if (car == null)
-			{
-				return NotFound();
-			}
-			if (ModelState.IsValid)
-			{
-				_db.Cars.Update(car);
-				_db.SaveChanges();
-				return RedirectToAction("Index");
-			}
+			ViewBag.Car = rental.Car;
+			ViewBag.Customer = rental.Customer;
 
-			return View(car);
+			return View(rental);
 		}
 
 		[HttpGet]
@@ -148,6 +138,7 @@ namespace RentACar.Controllers
 
 			if (rentalToDelete.Car != null)
 			{
+				rentalToDelete.Car.isAvailable = true;
 				rentalToDelete.Car.RentalId = null; ;
 			}
 

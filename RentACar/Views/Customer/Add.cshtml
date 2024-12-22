@@ -9,6 +9,7 @@
 				</div>
 				<div class="card-body">
 					<form asp-action="Add" method="post">
+						<div asp-validation-summary="All" class="text-danger"></div>
 						<div class="form-group mb-3">
 							<label asp-for="LastName" class="form-label">Lastname</label>
 							<input asp-for="LastName" class="form-control"/>

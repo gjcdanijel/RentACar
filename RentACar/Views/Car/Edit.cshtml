@@ -9,6 +9,7 @@
 				</div>
 				<div class="card-body">
 					<form asp-action="Edit" method="post">
+						<div asp-validation-summary="All" class="text-danger"></div>
 						<div class="form-group mb-3">
 							<label asp-for="Model" class="form-label">Model</label>
 							<input asp-for="Model" class="form-control" placeholder="Enter model here" />
@@ -24,6 +25,9 @@
 						<div class="form-group mb-3">
 							<label asp-for="Fuel" class="form-label">Fuel</label>
 							<input asp-for="Fuel" class="form-control" />
+						</div>
+						<div class="form-group">
+							<input type="hidden" asp-for="isAvailable" value="@Model.isAvailable" />
 						</div>
 						<div class="d-flex justify-content-between">
 							<button type="submit" class="btn btn-primary">Save</button>

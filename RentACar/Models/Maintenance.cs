@@ -11,6 +11,7 @@ namespace RentACar.Models
 		public string Type { get; set; }
 		public string Description { get; set; }
 		[Required]
+		[Range(0.01, double.MaxValue, ErrorMessage = "The cost must be a positive number.")]
 		public float Cost { get; set; } = 0f;
 		public DateTime MaitenanceDate { get; set; } = DateTime.Now;
 		[ForeignKey("Car")]
